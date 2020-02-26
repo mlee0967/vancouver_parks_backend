@@ -10,6 +10,7 @@ $data = json_decode((file_get_contents('php://input')));
 $query = "(select distinct ParkID from parks_facilities)";
 $arr = $data->{'filters'};
 foreach($arr as $filter){
+  $filter = mysqli_real_escape_string($conn, $filter);
   if($filter=="Washrooms")
     $query = $query." intersect (select ParkID from parks where Washrooms='Y')";
   else

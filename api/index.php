@@ -1,5 +1,5 @@
 <?php
-require "../controller/controller.php";
+require "../controller/Controller.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

@@ -6,7 +6,7 @@ Dataset for table `parks_facilities` from: https://opendata.vancouver.ca/explore
 
 #### Endpoints
 
-`[GET] /api/parks` : returns all park info
+`[GET] /api/parks` : returns info of all parks
 
 `[GET] /api/facility_types` : returns all facility types (e.g. washrooms, soccer fields)
 

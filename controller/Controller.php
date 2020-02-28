@@ -1,5 +1,5 @@
 <?php
-require '../db/Gateway.php';
+require "../db/Gateway.php";
 
 class Controller {
     private $method;
@@ -15,7 +15,7 @@ class Controller {
 
     public function processRequest(){
       switch ($this->method) {
-        case 'GET':
+        case "GET":
           if($this->request=="parks") {
             $response = $this->gateway->getParks();
           }else if($this->request=="facility_types"){
@@ -24,10 +24,10 @@ class Controller {
             $this->notFoundResponse();
           };
           break;
-        case 'POST':
+        case "POST":
           if($this->request=="park_ids" && 
-             property_exists($this->data, 'filters')){
-            $response = $this->gateway->getParkIDs($this->data->{'filters'});
+             property_exists($this->data, "filters")){
+            $response = $this->gateway->getParkIDs($this->data->{"filters"});
           }else{
             $this->notFoundResponse();
           }
@@ -35,12 +35,12 @@ class Controller {
         default:
           $this->notFoundResponse();
       }
-      header('HTTP/1.1 200 OK');
+      header("HTTP/1.1 200 OK");
       echo json_encode($response);
     }
     
     private function notFoundResponse(){
-        header('HTTP/1.1 404 Not Found');
+        header("HTTP/1.1 404 Not Found");
         die();
     }
 }

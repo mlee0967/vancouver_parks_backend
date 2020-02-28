@@ -1,10 +1,10 @@
 <?php
-include 'dbh.php';
+include "dbh.php";
 
 class Gateway {
   public function __construct(){
-    $this->conn = mysqli_connect($GLOBALS['servername'], $GLOBALS['username'], 
-      $GLOBALS['password'], $GLOBALS['database']);
+    $this->conn = mysqli_connect($GLOBALS["servername"], $GLOBALS["username"], 
+      $GLOBALS["password"], $GLOBALS["database"]);
     if(mysqli_connect_errno()){
       printf("Connect failed: %s\n", mysqli_connect_error());
       exit();
@@ -26,23 +26,23 @@ class Gateway {
     $rows = array();
     $prev = null;
     while ($row = mysqli_fetch_assoc($result)){
-      if($prev != $row['ParkID']){
-        $comma = strpos($row['GoogleMapDest'], ',');
+      if($prev != $row["ParkID"]){
+        $comma = strpos($row["GoogleMapDest"], ",");
 
         $arr = array();
-        $arr['id'] = $row['ParkID'];
-        $arr['name'] = $row['Name'];
-        $arr['washrooms'] = $row['Washrooms'];
-        $arr['address'] = $row['StreetNumber']." ".$row['StreetName'];
-        $arr['lat'] = substr($row['GoogleMapDest'], 0, $comma);
-        $arr['lng'] = substr($row['GoogleMapDest'], $comma+1);
-        $arr['facilities'] = array();
-        $prev = $row['ParkID'];
+        $arr["id"] = $row["ParkID"];
+        $arr["name"] = $row["Name"];
+        $arr["washrooms"] = $row["Washrooms"];
+        $arr["address"] = $row["StreetNumber"]." ".$row["StreetName"];
+        $arr["lat"] = substr($row["GoogleMapDest"], 0, $comma);
+        $arr["lng"] = substr($row["GoogleMapDest"], $comma+1);
+        $arr["facilities"] = array();
+        $prev = $row["ParkID"];
         array_push($rows, $arr);
       }
 
-      if(strlen($row['FacilityType'])>0)
-        array_push($rows[count($rows)-1]['facilities'], $row['FacilityType']);
+      if(strlen($row["FacilityType"])>0)
+        array_push($rows[count($rows)-1]["facilities"], $row["FacilityType"]);
     }
 
     return $rows;
@@ -55,7 +55,7 @@ class Gateway {
     $rows = array();
     $prev = null;
     while ($row = mysqli_fetch_assoc($result)){
-      array_push($rows, $row['FacilityType']);
+      array_push($rows, $row["FacilityType"]);
     }
     array_push($rows, "Washrooms");
 
@@ -81,7 +81,7 @@ class Gateway {
     $result = mysqli_query($this->conn, $query);
     $rows = array();
     while ($row = mysqli_fetch_assoc($result)){
-      array_push($rows, $row['ParkID']);
+      array_push($rows, $row["ParkID"]);
     }
 
     return $rows;

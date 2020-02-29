@@ -2,6 +2,8 @@
 include "dbh.php";
 
 class Gateway {
+  private $conn;
+  
   public function __construct(){
     $this->conn = mysqli_connect($GLOBALS["servername"], $GLOBALS["username"], 
       $GLOBALS["password"], $GLOBALS["database"]);
@@ -16,9 +18,9 @@ class Gateway {
   }    
 
   public function getParks(){
-    $query = "(SELECT ParkID, parks.Name, Washrooms, StreetNumber, StreetName,
+    $query = "(select ParkID, parks.Name, Washrooms, StreetNumber, StreetName,
       GoogleMapDest, FacilityType FROM parks join parks_facilities using(ParkID)) 
-      union (SELECT ParkID, parks.Name, Washrooms, StreetNumber, StreetName, 
+      union (select ParkID, parks.Name, Washrooms, StreetNumber, StreetName, 
       GoogleMapDest, null as FacilityType from parks where facilities='N')
       order by ParkID,FacilityType";
     $result = mysqli_query($this->conn, $query);
@@ -41,8 +43,9 @@ class Gateway {
         array_push($rows, $arr);
       }
 
-      if(strlen($row["FacilityType"])>0)
+      if(strlen($row["FacilityType"])>0){
         array_push($rows[count($rows)-1]["facilities"], $row["FacilityType"]);
+      }
     }
 
     return $rows;
